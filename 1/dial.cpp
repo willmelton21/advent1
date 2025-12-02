@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <cmath>
 
 using namespace std;
 int main() {
@@ -17,31 +18,30 @@ int main() {
     cout << "instruction is: " << str << endl;
     if(str[0] == 'L') {
       int sub = stoi(str.substr(1));
-      cout << "subtracting: " << sub << endl;
+       int prev = dial;
       dial -= sub;
-      cout << "dial was subtracted to: " << dial << endl;
-      if (dial < 0) {
+      if (dial <= 0) {
+        ctr += dial / -100 + 1;
+        if (prev == 0) {
+          ctr--;
+        }
 
-        while(dial < 0){
           dial = ((dial % 100) + 100) % 100;
         }
 
       }
 
-    }
     else if(str[0] == 'R') {
       int add = stoi(str.substr(1));
       dial += add;
-      if (dial > 99) {
-        while(dial > 99) {
-          dial = dial % 100;
+      if (dial >= 100) {
+          ctr += dial / 100;
         }
       }
-    }
+    
 
-      if (dial == 0){
-        ctr++;
-      }
+    dial = dial % 100;
+
   } 
     cout << "the final count is: " << ctr << endl;
 }
